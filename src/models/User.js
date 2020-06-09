@@ -6,12 +6,39 @@ const jwt = require('jsonwebtoken')
 const userSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, '*Campo obrigatório!'],
+        trim: true
+    },
+    idade: {
+        type: Number,
+        required: [true, '*Campo obrigatório!'],
+        trim: true
+    },
+    sexo: {
+        type: String,
+        trim: true
+    },
+    pais: {
+        type: String,
+        trim: true
+    },
+    estado: {
+        type: String,
+        trim: true
+    },
+    cidade: {
+        type: String,
+        trim: true
+    },
+    telefone: {
+        type: Number,
+        required: [true, '*Campo obrigatório!'],
+        unique: true,
         trim: true
     },
     email: {
         type: String,
-        required: true,
+        required: [true, '*Campo obrigatório!'],
         unique: true,
         lowercase: true,
         validate: value => {
@@ -30,7 +57,40 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    status:[
+        {
+            ativo: {
+                type: Number,
+                trim: true
+            },
+            online: {
+                type: Number,
+                trim: true
+            },
+            banido: [
+                {
+                    valor: {
+                        type: Number,
+                        trim: true
+                    },
+                    data: {
+                        type: String,
+                        trim: true
+                    },
+                    motivo: {
+                        type: String,
+                        trim: true
+                    }
+                }
+            ],
+            primeiroAcesso:{
+                type: Number,
+                trim: true
+            }
+            
+        }
+    ]
 })
 
 userSchema.pre('save', async function (next) {
