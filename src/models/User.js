@@ -12,6 +12,8 @@ const userSchema = mongoose.Schema({
     idade: {
         type: Number,
         required: [true, '*Campo obrigatório!'],
+        min: 12, 
+        max: 150,
         trim: true
     },
     sexo: {
@@ -83,13 +85,19 @@ const userSchema = mongoose.Schema({
                         trim: true
                     }
                 }
-            ],
-            primeiroAcesso:{
-                type: Number,
-                trim: true
-            }
-            
+            ] 
         }
+    ],
+    primeiroAcesso:{
+        type: Number,
+        trim: true
+    },
+    nivelAcesso: {
+        type: Number,
+        trim: true
+    },
+    posts : [
+        {type: mongoose.Schema.Types.ObjectId,ref:'Post'}
     ]
 })
 
@@ -112,8 +120,8 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 userSchema.statics.findByCredentials = async (email, password) => {
-    // Search for a user by email and password.
-    const user = await User.findOne({ email} )
+    //Pusca usuário por e-mail senha e telefone
+    const user = await User.findOne({ email } )
     if (!user) {
         throw new Error({ error: 'Log-in invalido' })
     }

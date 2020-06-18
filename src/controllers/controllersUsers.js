@@ -1,5 +1,5 @@
+const express = require('express')
 const User = require('../models/User')
-
 
 exports.registra = async (req, res) => {
     // Cria a conta do usuário
@@ -14,54 +14,51 @@ exports.registra = async (req, res) => {
 };
 
 
-
-
 // Delete um registro do banco
-
 exports.delete = (req, res) => {
     User.findByIdAndRemove(req.params.id)
-    .then(user => {
-        if(!user) {
-            return res.status(404).send({
-                message: "Não é um id " + req.params.id
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({
+                    message: "Não é um id " + req.params.id
+                });
+            }
+            res.send({ message: "Registro excluido com sucesso!" });
+        }).catch(err => {
+            if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+                return res.status(404).send({
+                    message: "Não é um id " + req.params.id
+                });
+            }
+            return res.status(500).send({
+                message: "Could not delete note with id " + req.params.id
             });
-        }
-        res.send({message: "Registro excluido com sucesso!"});
-    }).catch(err => {
-        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
-            return res.status(404).send({
-                message: "Não é um id " + req.params.id
-            });                
-        }
-        return res.status(500).send({
-            message: "Could not delete note with id " + req.params.id
         });
-    });
-    
+
 };
 
 
 
 //Pesquisar por um usuário
-exports.pesquisaUm= (req, res) => {
+exports.pesquisaUm = (req, res) => {
     User.findById(req.params.id)
-    .then(user => {
-        if(!user) {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params.id
-            });            
-        }
-        res.send(user);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params.id
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving note with id " + req.params.id
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({
+                    message: "Note not found with id " + req.params.id
+                });
+            }
+            res.send(user);
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Note not found with id " + req.params.id
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving note with id " + req.params.id
+            });
         });
-    });
 };
 
 
@@ -77,8 +74,6 @@ exports.pesquisaTodos = async (req, res) => {
     });
 
 }
-
-
 
 exports.login = async (req, res) => {
     //Faz o login do usuário

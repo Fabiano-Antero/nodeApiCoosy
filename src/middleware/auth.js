@@ -6,7 +6,7 @@ const auth = async(req, res, next) => {
     const data = jwt.verify(token, process.env.JWT_KEY)
     try {
         const user = await User.findOne({ _id: data._id, 'tokens.token': token })
-        if (!user) {
+        if (!user ) {
             throw new Error()
         }
         req.user = user
@@ -17,4 +17,7 @@ const auth = async(req, res, next) => {
     }
 
 }
+
+
+
 module.exports = auth
