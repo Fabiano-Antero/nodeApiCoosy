@@ -6,16 +6,20 @@ const User = require('../models/User')
 exports.imgUploads = async (req, res) => {
 
     try {
-
+        const userId = req.params.id;
         let img = new Post({
+                data: req.body.data,
+                like: req.body.like,
+                conteudo: req.body.conteudo,
+                images: req.files
+            });
+            const user = await User.findById(userId);
+            img.autor = user;
 
-            data: req.body.data,
-            like: req.body.like,
-            conteudo: req.body.conteudo,
-            images: req.files
-        });
-        await img.save();
-        res.status(200).send({ img })
+            await img.save();
+            user.post.push(img);
+            await user.save();
+            res.status(201).json(img);
 
     } catch (error) {
         res.status(400).send(error)

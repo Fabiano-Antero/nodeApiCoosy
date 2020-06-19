@@ -4,6 +4,7 @@ const User = require('../models/User')
 exports.registra = async (req, res) => {
     // Cria a conta do usuário
     try {
+
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
@@ -45,18 +46,18 @@ exports.pesquisaUm = (req, res) => {
         .then(user => {
             if (!user) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.id
+                    message: "Usuário não existe: " + req.params.id
                 });
             }
             res.send(user);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.id
+                    message: "Usuário não existe: " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving note with id " + req.params.id
+                message: "Error ao recuperar o id: " + req.params.id
             });
         });
 };

@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 
 
 const postSchema = mongoose.Schema({
-
-    //nome: {type: String,trim: true,},
     /*
     comentario: [
         {
@@ -13,7 +11,9 @@ const postSchema = mongoose.Schema({
             
         }
     ],*/
-    user: {type: mongoose.Schema.Types.ObjectId,ref:'User'},
+      autor : [
+        {type: mongoose.Schema.Types.ObjectId,ref:'User'}
+    ],
     data: { type: Date, default: Date.now() },
     like: { type: Number, trim: true, required: true },
     conteudo: { type: String, required: true },

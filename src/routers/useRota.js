@@ -19,7 +19,7 @@ router.get('/api/registro/:id', controllersUsers.pesquisaUm)// busca um registro
 router.delete('/api/registro/:id', controllersUsers.delete)// deleta um registro
 
 //Rotas post
-router.post('/api/post/img', auth, uploads, controllerPost.imgUploads)
+router.post('/api/post/img/:id', auth, uploads, controllerPost.imgUploads)
 
 
 
