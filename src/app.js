@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
     });
 });
 app.use(express.static('public'))
+
 app.listen(port, () => {
     console.log(`Servidor executando na porta ${port}`)
 })
