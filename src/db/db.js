@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 
 mongoose.connect(process.env.MONGODB_URL, {
+    useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
 }).then(() => console.log('Banco de dados conectado!'))

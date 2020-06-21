@@ -1,10 +1,6 @@
 const express = require('express')
 const auth = require('../middleware/auth')
-const uploads = require('../middleware/storage')
-
 const controllersUsers = require('../controllers/controllersUsers')
-const controllerPost = require('../controllers/controllerPost')
-
 const router = express.Router()
 
 
@@ -18,8 +14,6 @@ router.get('/api/registro/all', controllersUsers.pesquisaTodos)// busca todos re
 router.get('/api/registro/:id', controllersUsers.pesquisaUm)// busca um registro especifico
 router.delete('/api/registro/:id', controllersUsers.delete)// deleta um registro
 
-//Rotas post
-router.post('/api/post/img/:id', auth, uploads, controllerPost.imgUploads)
 
 
 

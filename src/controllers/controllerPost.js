@@ -3,26 +3,40 @@ const Post = require('../models/post')
 const User = require('../models/User')
 
 //Configuração do envio de multiplas imagens para o MongoDB
-exports.imgUploads = async (req, res) => {
+exports.create = async (req, res) => {
 
     try {
         const userId = req.params.id;
         let img = new Post({
-                data: req.body.data,
-                like: req.body.like,
-                conteudo: req.body.conteudo,
-                images: req.files
-            });
-            const user = await User.findById(userId);
-            img.autor = user;
+            data: req.body.data,
+            like: req.body.like,
+            conteudo: req.body.conteudo,
+            images: req.files
+        });
+        const user = await User.findById(userId);
+        img.autor_id = user;
 
-            await img.save();
-            user.post.push(img);
-            await user.save();
-            res.status(201).json(img);
+        await img.save();
+
+
+        user.post_id.push(img);
+        await user.save();
+        console.log(img)
+        res.status(201).json({
+            data: img,
+            message: 'Publicado com sucesso!',
+            status: 201
+        });
 
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).json({
+            erro: [
+                {
+                    message: "Envio não foi concluido, tente nomavente",
+                    status: 400
+                }
+            ]
+        })
     }
 
     /*
@@ -48,3 +62,28 @@ exports.imgUploads = async (req, res) => {
         res.send(finalImg.image);
     })*/
 };
+
+exports.delete = (req, res) => {
+    Post.findByIdAndRemove(req.params.id).then(post => {
+        if (!post) {
+            return res.status(404).json({
+                status: 404,
+                message: "Não foi encontrada"
+            });
+        }
+        res.status(200).json({
+            status: 200,
+            message: "Postagem deletada!"
+        });
+    }).catch(err => {
+        if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Não foi encontrado "
+            });
+        }
+        return res.status(500).send({
+            message: "Sem respota para essa postagem" 
+        });
+    });
+}
+

@@ -4,7 +4,6 @@ const User = require('../models/User')
 exports.registra = async (req, res) => {
     // Cria a conta do usuário
     try {
-
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
@@ -21,18 +20,18 @@ exports.delete = (req, res) => {
         .then(user => {
             if (!user) {
                 return res.status(404).send({
-                    message: "Não é um id " + req.params.id
+                    message: "Não encontrado " + req.params.id
                 });
             }
-            res.send({ message: "Registro excluido com sucesso!" });
+            res.send({ message: "Conta deletada com sucesso!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Não é um id " + req.params.id
+                    message: "Não encontrado " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Could not delete note with id " + req.params.id
+                message: "Não foi possível deletar esse conta " + req.params.id
             });
         });
 
