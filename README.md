@@ -1,8 +1,7 @@
 #Coosy node API
-###Rede social com foco na cultura pop
-
+Rede social com foco na cultura pop
 -------------------------------------------
-####Cruds implementados
+>Cruds implementados
 
 |           _Use_             |           _Post_            |        _Comentário_         |
 |-----------------------------|-----------------------------|-----------------------------|
