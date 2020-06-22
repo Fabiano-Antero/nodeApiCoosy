@@ -23,8 +23,10 @@ Rede social com foco na cultura pop
 
 **Comando**
 
+comando para
 ```
- npm install
+ Instalar dependencias >>>   npm install
+ Rodar aplicação >>>   npm start
 ```
 
 
