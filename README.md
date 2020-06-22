@@ -16,13 +16,15 @@ Rede social com foco na cultura pop
 -----------------------------------------
 
 **Requisito**
->Node.js v12.16.2.
 
+>Node.js v12.16.2.
 >Npm 6.14.4
 
 **Comando**
-> npm install
 
+```
+> npm install
+```
 
 
 
