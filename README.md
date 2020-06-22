@@ -4,28 +4,19 @@
 -------------------------------------------
 ####Cruds implementados
 
-|         * _Use_             |
-|-----------------------------|
-|Cria usuário                 | 
-|atualiza usuário             |
-|Deleta usuário               |
-|Dusca todos os usuarios      |
-|Dusca usuário específico     |
+|           _Use_             ||           _Post_            ||        _Comentário_         |
+|-----------------------------||-----------------------------||-----------------------------|
+|Cria usuário                 ||Cria post                    ||Cria comentário              | 
+|atualiza usuário             ||atualiza post                ||atualiza comentário          |
+|Deleta usuário               ||Deleta post                  ||Deleta comentário            |
+|Busca todos os usuarios      ||Busca todos os post          ||Busca todos os comentário    |
+|Busca usuário específico     ||Busca post específico        ||Busca comentário específico  |
 
 
-|         * _Post_            |
-|-----------------------------|
-|Cria post                    |
-|atualiza post                |
-|Deleta post                  |
-|Dusca todos os post          |
-|Dusca post específico        |
 
 
-|      * _Comentário_         |
-|-----------------------------|
-|Cria comentário              |
-|atualiza comentário          |
-|Deleta comentário            |
-|Dusca todos os comentário    |
-|Dusca comentário específico  |
+
+
+
+
+
