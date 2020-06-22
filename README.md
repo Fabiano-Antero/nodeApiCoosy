@@ -17,6 +17,9 @@ Rede social com foco na cultura pop
 
 >Node.js v12.16.2.
 
+>Npm 6.14.4
+
+
 
 
 
