@@ -1,6 +1,7 @@
 const express = require('express')
 const Post = require('../models/post')
-const User = require('../models/User')
+const User = require('../models/User');
+const comment = require('../models/comment');
 
 //Configuração do envio de multiplas imagens para o MongoDB
 exports.create = async (req, res) => {
@@ -17,6 +18,7 @@ exports.create = async (req, res) => {
         img.autor_id = user;
 
         await img.save();
+        console.log(img);
 
 
         user.post_id.push(img);
@@ -38,30 +40,32 @@ exports.create = async (req, res) => {
             ]
         })
     }
-
-    /*
-    var img = fs.readFileSync(req.file.path);
-    var encode_image = img.toString('base64');
-
-    // Definindo o json para a imagem
-    var finalImg = {
-        contentType: req.file.mimetype,
-        path: req.file.path,
-        image: new Buffer(encode_image,'base64')
-    };
-
-    // aqui eu insiro a imagem no banco
-    db.collection('postUser').insertOne(finalImg,(err, result) =>{
-        console.log(result)
-
-        if(err) return console.log(err);
-
-        console.log("imagem salva salvo")
-
-        res.contentType(finalImg.contentType);
-        res.send(finalImg.image);
-    })*/
 };
+
+exports.update = async (req, res) => {
+    try {
+        const postId = req.params.id
+        const post = await Post.findOneAndUpdate(postId, req.boyd, {
+            new: true,
+            rawResult: true
+
+        });
+
+        res.status(200).json({
+            status: 200,
+            message: "Atualizado!",
+            data: post
+        });
+        console.log(post);
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            Status: 400,
+            message: "Não foi possível atualizar, tente novamente"
+        })
+    }
+}
 
 exports.delete = (req, res) => {
     Post.findByIdAndRemove(req.params.id).then(post => {
@@ -82,8 +86,50 @@ exports.delete = (req, res) => {
             });
         }
         return res.status(500).send({
-            message: "Sem respota para essa postagem" 
+            message: "Sem respota para essa postagem"
         });
     });
 }
 
+//buuscar todos
+exports.searchs = (req, res) => {
+    Post.find().then(post => {
+        res.json({
+            status: 200,
+            message: "Sucesso!",
+            data: post
+        })
+    }).catch(err => {
+        res.status(500).json({
+            message: err.message || "Ocorreu um erro na listagem das postagens"
+        });
+    });
+
+}
+
+//buscar um
+exports.search = (req, res) => {
+    Post.findById(req.params.id)
+        .then(post => {
+            if (!post) {
+                return res.status(404).send({
+                    message: "Não foi encontrado " + req.params.id
+                });
+            }
+            res.json({
+                status: 200,
+                message: "Sucesso!",
+                data: post
+            })
+            console.log(post)
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "postagem não existe: " + req.params.id
+                });
+            }
+            return res.status(500).send({
+                message: "Error ao recuperar a postagem: " + req.params.id
+            });
+        });
+};

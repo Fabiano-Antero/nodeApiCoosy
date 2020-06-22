@@ -37,28 +37,28 @@ exports.create = async (req, res) => {
 //atualiza os dados
 exports.update = async (req, res) => {
 
-        try{
-            const commentId = req.params.id
-            const comment = await Comment.findOneAndUpdate(commentId, req.body,{
-                new: true,
-                rawResult: true 
-            });
-            console.log(comment);
-            res.status(200).json({
-                status: 200,
-                message: "Atualizado!",
-                data: comment
-            });
+    try {
+        const commentId = req.params.id
+        const comment = await Comment.findOneAndUpdate(commentId, req.body, {
+            new: true,
+            rawResult: true
+        });
+        console.log(comment);
+        res.status(200).json({
+            status: 200,
+            message: "Atualizado!",
+            data: comment
+        });
 
-        }catch(error){
-            
-           res.status(400).json({
-               Status: 400,
-               message: "Não foi possível atualizar, tente novamente"
-           })
-        }
-        
-        
+    } catch (error) {
+
+        res.status(400).json({
+            Status: 400,
+            message: "Não foi possível atualizar, tente novamente"
+        })
+    }
+
+
 }
 
 

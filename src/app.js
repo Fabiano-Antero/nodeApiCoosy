@@ -3,11 +3,12 @@ const port = process.env.PORT
 const userRouter = require('./routers/usersRota')
 const userPost = require('./routers/postsRota')
 const userComment = require('./routers/commentsRota')
+const cors = require('cors')
 require('./db/db')
 
 const app = express()
 
-
+app.use(cors())
 app.use(express.json())
 app.use(userRouter, userPost, userComment)
 

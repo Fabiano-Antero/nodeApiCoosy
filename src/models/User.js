@@ -4,16 +4,14 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const userSchema = mongoose.Schema({
-    name: {
+    nome: {
         type: String,
         required: [true, '*Campo obrigatório!'],
         trim: true
     },
-    idade: {
-        type: Number,
+    nascimento: {
+        type: String,
         required: [true, '*Campo obrigatório!'],
-        min: 12, 
-        max: 150,
         trim: true
     },
     sexo: {
@@ -32,12 +30,6 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true
     },
-    telefone: {
-        type: Number,
-        required: [true, '*Campo obrigatório!'],
-        unique: true,
-        trim: true
-    },
     email: {
         type: String,
         required: [true, '*Campo obrigatório!'],
@@ -51,7 +43,7 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: [true, '*Campo obrigatório!'],
         minLength: 7
     },
     tokens: [{
@@ -120,7 +112,6 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 userSchema.statics.findByCredentials = async (email, password) => {
-    //Pusca usuário por e-mail senha e telefone
     const user = await User.findOne({ email } )
     if (!user) {
         throw new Error({ error: 'Log-in invalido' })

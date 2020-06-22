@@ -7,9 +7,18 @@ exports.registra = async (req, res) => {
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        res.status(201).json({ 
+            starus: 201,
+            message: "Conta criada com sucesso",
+            data: {user, token }
+        })
+        console.log(user)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).json({
+            status: 400,
+            message: "não foi possível com finalizar essa solicitação.",
+            error
+        })
     }
 };
 
@@ -37,6 +46,30 @@ exports.delete = (req, res) => {
 
 };
 
+//atualizar dados
+exports.update = async (req, res) =>{
+    try{
+        const userId = req.params.id
+        const user = await User.findOneAndUpdate(userId, req.body,{
+            new: true,
+            rawResult: true
+        });
+        console.log(user);
+        res.status(200).json({
+            status: 200,
+            message: "Atualizado!",
+            data: user
+        });
+    }catch (err) {
+
+        res.status(400).json({
+            Status: 400,
+            message: "Não foi possível atualizar, tente novamente"
+        })
+    }
+
+
+}
 
 
 //Pesquisar por um usuário
@@ -60,6 +93,7 @@ exports.pesquisaUm = (req, res) => {
             });
         });
 };
+
 
 
 
