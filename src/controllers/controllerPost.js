@@ -1,4 +1,3 @@
-const express = require('express')
 const Post = require('../models/post')
 const User = require('../models/User');
 const comment = require('../models/comment');
